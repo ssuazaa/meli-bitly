@@ -22,16 +22,4 @@ public class ErrorHandler {
         .body(error));
   }
 
-  @ExceptionHandler(value = {RuntimeException.class, Exception.class})
-  public Mono<ResponseEntity<ErrorResponseDto>> handleBaseException(Throwable ex) {
-    var error = ErrorResponseDto.builder()
-        .key("UNEXPECTED_ERROR")
-        .message(ex.getMessage())
-        .dateTime(LocalDateTime.now())
-        .build();
-    return Mono.just(ResponseEntity
-        .status(400)
-        .body(error));
-  }
-
 }
