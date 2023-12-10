@@ -17,7 +17,8 @@ public class TestMeliBitlyApplication {
   }
 
   public static void main(String[] args) {
-    SpringApplication.from(MeliBitlyApplication::main).with(TestMeliBitlyApplication.class)
+    SpringApplication.from(MeliBitlyApplication::main)
+        .with(TestMeliBitlyApplication.class)
         .run(args);
   }
 

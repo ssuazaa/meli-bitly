@@ -24,14 +24,14 @@ import reactor.core.publisher.Mono;
 public class ShortUrlRestController {
 
   private final RestShortUrlMapper mapper;
-  private final CreateShortUrlUseCase createShortUrlUseCase;
   private final FindShortUrlUseCase findShortUrlUseCase;
+  private final CreateShortUrlUseCase createShortUrlUseCase;
 
   public ShortUrlRestController(RestShortUrlMapper mapper,
-      CreateShortUrlUseCase createShortUrlUseCase, FindShortUrlUseCase findShortUrlUseCase) {
+      FindShortUrlUseCase findShortUrlUseCase, CreateShortUrlUseCase createShortUrlUseCase) {
     this.mapper = mapper;
-    this.createShortUrlUseCase = createShortUrlUseCase;
     this.findShortUrlUseCase = findShortUrlUseCase;
+    this.createShortUrlUseCase = createShortUrlUseCase;
   }
 
   @GetMapping
@@ -41,7 +41,7 @@ public class ShortUrlRestController {
   }
 
   @GetMapping("/hash/{hash}")
-  public Mono<ResponseEntity<ShortenerResponseDto>> findByShortUrl(@PathVariable String hash) {
+  public Mono<ResponseEntity<ShortenerResponseDto>> findByHash(@PathVariable String hash) {
     return this.findShortUrlUseCase.findByHash(hash)
         .map(this.mapper::toResponseWithoutStatistics)
         .map(ResponseEntity::ok);
