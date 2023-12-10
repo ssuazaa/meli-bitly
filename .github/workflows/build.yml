@@ -43,7 +43,7 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          audience: ${{ secrets.WIF_PROVIDER }}
+          audience: //iam.googleapis.com/projects/913175098612/locations/global/workloadIdentityPools/github-actions-cloud-run/providers/githun
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
           service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
       - name: Set up Docker Buildx
