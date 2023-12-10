@@ -38,7 +38,7 @@ jobs:
         run: ./gradlew build sonar --info
       - name: Google Auth
         id: auth
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@v1
         with:
           token_format: access_token
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
