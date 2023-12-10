@@ -53,7 +53,7 @@ jacocoTestReport {
 
 sonar {
     properties {
-        property "sonar.projectKey", "meli-bitly"
+        property "sonar.projectKey", "ssuazaa_meli-bitly"
         property "sonar.organization", "ssuazaa"
         property "sonar.host.url", "https://sonarcloud.io"
     }
