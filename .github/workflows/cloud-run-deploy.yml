@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: ${SERVICE}
   annotations:
-    #client.knative.dev/serviceAccountName: ${SERVICE_ACCOUNT}
     serving.knative.dev/visibility: "public"
 spec:
   template:

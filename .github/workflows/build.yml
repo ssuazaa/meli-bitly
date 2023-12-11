@@ -65,7 +65,6 @@ jobs:
       - name: Create Service declaration
         run: |-
           export SERVICE="${{ vars.SERVICE_NAME }}"
-          export SERVICE_ACCOUNT="${{ vars.SERVICE_ACCOUNT }}"
           export IMAGE="${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest"
           envsubst < ./.github/workflows/cloud-run-deploy.yml > service.yaml
           cat service.yaml
@@ -75,5 +74,7 @@ jobs:
         with:
           region: ${{ vars.REGION }}
           metadata: service.yaml
+          env_vars: |
+            ${{ vars.SPRING_ENV_PROPERTIES }}
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
