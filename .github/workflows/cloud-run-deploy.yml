@@ -19,7 +19,7 @@ spec:
               value: ${SPRING_MONGODB_URI}
           resources:
             limits:
-              memory: "256Mi"
+              memory: "512Mi"
   traffic:
     - percent: 100
       latestRevision: true
