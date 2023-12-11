@@ -75,7 +75,5 @@ jobs:
         with:
           region: ${{ vars.REGION }}
           metadata: service.yaml
-          env_vars: |
-            ${{ vars.SPRING_ENV_PROPERTIES }}
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
