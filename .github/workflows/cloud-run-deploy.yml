@@ -2,14 +2,15 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: ${SERVICE}
+  annotations:
+    #client.knative.dev/serviceAccountName: ${SERVICE_ACCOUNT}
+    serving.knative.dev/visibility: "public"
 spec:
   template:
     metadata:
       annotations:
         autoscaling.knative.dev/maxScale: '10'
         autoscaling.knative.dev/minScale: '1'
-        #client.knative.dev/serviceAccountName: ${SERVICE_ACCOUNT}
-        serving.knative.dev/visibility: "public"
     spec:
       containerConcurrency: 80
       containers:
