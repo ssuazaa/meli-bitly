@@ -14,6 +14,9 @@ spec:
       containerConcurrency: 80
       containers:
         - image: ${IMAGE}
+          env:
+            - name: "spring.data.mongodb.uri"
+              value: {SPRING_MONGODB_URI}
           resources:
             limits:
               memory: "256Mi"
