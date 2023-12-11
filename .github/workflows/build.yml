@@ -59,10 +59,9 @@ jobs:
         id: build-image
         uses: docker/build-push-action@v5
         with:
-          project_id: ${{ vars.GCP_PROJECT_ID }}
-          image_name: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}
-          image_tag: latest
-          push_only: false
+          push: true
+          tags: |
+            ${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest
       - name: Create Service declaration
         run: |-
           export CONTAINER_IMAGE="${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest"
