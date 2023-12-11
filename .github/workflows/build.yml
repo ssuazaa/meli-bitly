@@ -68,7 +68,7 @@ jobs:
         run: |-
           export SERVICE="${{ vars.SERVICE_NAME }}"
           export IMAGE="${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest"
-          export SPRING_MONGODB_URI="${{ SPRING_PROPERTIES_SPRING_DATA_MONGODB_URI }}"
+          export SPRING_MONGODB_URI="${ SPRING_PROPERTIES_SPRING_DATA_MONGODB_URI }"
           envsubst < ./.github/workflows/cloud-run-deploy.yml > service.yaml
           cat service.yaml
       - name: Deploy to Cloud Run
