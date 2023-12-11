@@ -8,10 +8,15 @@ spec:
       annotations:
         autoscaling.knative.dev/maxScale: '10'
         autoscaling.knative.dev/minScale: '1'
+        client.knative.dev/serviceAccountName: ${SERVICE_ACCOUNT}
+        serving.knative.dev/visibility: "public"
     spec:
       containerConcurrency: 80
       containers:
         - image: ${IMAGE}
+          resources:
+            limits:
+              memory: "256Mi"
   traffic:
     - percent: 100
       latestRevision: true

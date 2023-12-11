@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   CI:
-    name: CI stage
+    name: CI-CD pipeline
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
@@ -46,7 +46,7 @@ jobs:
           token_format: access_token
           audience: ${{ secrets.WIF_AUDIENCE }}
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+          service_account: ${{ vars.SERVICE_ACCOUNT }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Login to GCR
@@ -64,15 +64,15 @@ jobs:
             ${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest
       - name: Create Service declaration
         run: |-
-          export IMAGE="${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest"
           export SERVICE="${{ vars.SERVICE_NAME }}"
+          export SERVICE_ACCOUNT="${{ vars.SERVICE_ACCOUNT }}"
+          export IMAGE="${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest"
           envsubst < ./.github/workflows/cloud-run-deploy.yml > service.yaml
           cat service.yaml
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v1
         with:
-          service: ${{ vars.SERVICE_NAME }}
           region: ${{ vars.REGION }}
           metadata: service.yaml
       - name: Show Output
