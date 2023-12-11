@@ -15,7 +15,7 @@ spec:
       containers:
         - image: ${IMAGE}
           env:
-            - name: "spring.data.mongodb.uri"
+            - name: "SPRING_DATA_MONGODB_URI"
               value: {SPRING_MONGODB_URI}
           resources:
             limits:
