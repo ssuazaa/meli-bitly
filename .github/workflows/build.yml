@@ -59,19 +59,20 @@ jobs:
         id: build-image
         uses: docker/build-push-action@v5
         with:
-          push: true
-          tags: |
-            ${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+          image_name: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}
+          image_tag: latest
+          push_only: false
       - name: Create Service declaration
         run: |-
-          export CONTAINER_IMAGE="${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:${{ inputs.ref }}"
+          export CONTAINER_IMAGE="${{ vars.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.ARTIFACT_REPO }}/${{ vars.SERVICE_NAME }}:latest"
           export SERVICE_NAME="${{ vars.SERVICE_NAME }}"
           export PROJECT_ID="${{ vars.GCP_PROJECT_ID }}"
           export REVISION_TAG="${{ inputs.ref }}"
           export CLOUD_RUN_SA="${{ vars.CLOUD_RUN_SA }}"
-          export ENVIRONMENT="${{ inputs.environment }}"
-          envsubst < ./service-yaml/container.yaml > container-${{ inputs.environment }}.yaml
-          cat container-${{ inputs.environment }}.yaml
+          export ENVIRONMENT="main"
+          envsubst < ./service-yaml/container.yaml > container-main.yaml
+          cat container-main.yaml
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v1
